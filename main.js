@@ -240,3 +240,127 @@ const pets = [
       imageUrl: "http://lsae2.iypcdn.com/static//modules/uploads/photos/language1/dino-live-22.jpg?119"
     }
   ];
+
+  const targetingApp = document.querySelector("#app");
+
+  let domString = "";
+   for (const pet of pets) {
+
+ domString += `<div class="card" style="width: 18rem;">
+
+     <img src=${pet.imageUrl} class="card-img-top" alt=${pet.name}>
+
+      <div class="card-body">
+       <h5 class="card-title">${pet.type}</h5>
+       <p class="card-text">${pet.specialSkill}</p>
+       <p class="card-text">${pet.color}</p>
+     </div>
+   </div>`;
+};
+
+const renderToDom = (divId, htmlToRender) => {
+ const targetingApp = document.querySelector(divId);
+ targetingApp.innerHTML = htmlToRender;
+};
+
+const cardsOnDom = (array) => {
+ let domString = "";
+   for (const pet of array) {
+   domString += `<div class="card" style="width: 18rem;">
+   <img src="${pet.imageUrl}" class="card-img-top" alt=${pet.name}>
+   <div class="card-body">
+     <p class="card-title">${pet.name}</p>
+     <p class="card-title">${pet.type}</p>
+     <p class="card-text">${pet.specialSkill}</p>
+     <p class="card-text">${pet.color}</p>
+   </div>
+ </div>`;
+ }
+
+ renderToDom("#app", domString);
+};
+
+const filter = (array, typeString) => {
+ const typeArray = [];
+
+ for (const pet of array) {
+   if (pet.type === typeString) {
+     typeArray.push(pet);
+   }
+ }
+
+return typeArray;
+
+};
+
+cardsOnDom(pets);
+
+
+const showAllPetsButton = document.querySelector("#allPets-btn");
+const showDinosButton = document.querySelector("#dinos-btn");
+const showCatsButton = document.querySelector("#cats-btn");
+const showDogsButton = document.querySelector("#dogs-btn");
+
+showAllPetsButton.addEventListener("click", () => {
+ cardsOnDom(pets);
+});
+
+showDinosButton.addEventListener("click", () => {
+ const dinoPets = filter(pets, "dino");
+ cardsOnDom(dinoPets);
+});
+
+showCatsButton.addEventListener("click", () => {
+ const catPets = filter(pets, "cat");
+ cardsOnDom(catPets);
+});
+
+showDogsButton.addEventListener("click", () => {
+ const dogPets = filter(pets, "dog");
+ cardsOnDom(dogPets);
+});
+
+const form = document.querySelector('form');
+
+
+const createPet = (e) => {
+ e.preventDefault(); 
+
+ const newPetObj = {
+   id: pets.length + 1,
+   name: document.querySelector("#name").value,
+   color: document.querySelector("#color").value,
+   specialSkill: document.querySelector("#specialSkill").value,
+   type: document.querySelector("#type").value,
+   imageUrl: document.querySelector("#imageUrl").value,
+ };
+
+ pets.push(newPetObj);
+ cardsOnDom(pets);
+ form.reset();
+}
+
+form.addEventListener('submit', createPet);
+
+const app = document.querySelector("#app");
+app.addEventListener('click', (e) => {
+ 
+ if (e.target.id.includes("delete")) {
+   
+   const [, id] = e.target.id.split("--");
+
+   const index = pets.findIndex((e) => e.id === Number(id));
+
+   team.splice(index, 1);
+
+   cardsOnDom(pets);
+ }
+});
+
+const startApp = () => {
+ cardsOnDom(pets);
+ 
+};
+
+
+startApp();
