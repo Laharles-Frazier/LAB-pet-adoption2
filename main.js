@@ -273,6 +273,8 @@ const cardsOnDom = (array) => {
      <p class="card-title">${pet.type}</p>
      <p class="card-text">${pet.specialSkill}</p>
      <p class="card-text">${pet.color}</p>
+    <button class="btn btn-danger" id="delete--${pet.id}">Delete</button>
+
    </div>
  </div>`;
  }
@@ -351,7 +353,7 @@ app.addEventListener('click', (e) => {
 
    const index = pets.findIndex((e) => e.id === Number(id));
 
-   team.splice(index, 1);
+   pets.splice(index, 1);
 
    cardsOnDom(pets);
  }
@@ -362,5 +364,25 @@ const startApp = () => {
  
 };
 
+
+const App = document.querySelector("#app");
+
+
+app.addEventListener('click', (e) => {
+ 
+  if (e.target.id.includes("delete")) {
+  
+    const [, id] = e.target.id.split("--");
+    const index = pets.findIndex(e => e.id === Number(id));
+    pets.splice(index, 1);
+
+    cardsOnDom(pets);
+  }
+});
+
+const startapp = () => {
+  cardsOnDom(pets);
+
+}
 
 startApp();
