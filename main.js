@@ -241,6 +241,8 @@ const pets = [
     }
   ];
 
+// Targeting id with querySelector
+
   const targetingApp = document.querySelector("#app");
 
   let domString = "";
@@ -258,10 +260,13 @@ const pets = [
    </div>`;
 };
 
+// Render cards to DOM 
 const renderToDom = (divId, htmlToRender) => {
  const targetingApp = document.querySelector(divId);
  targetingApp.innerHTML = htmlToRender;
 };
+
+// Places cards on DOM
 
 const cardsOnDom = (array) => {
  let domString = "";
@@ -282,6 +287,8 @@ const cardsOnDom = (array) => {
  renderToDom("#app", domString);
 };
 
+// Filtering pets in array against pet type
+
 const filter = (array, typeString) => {
  const typeArray = [];
 
@@ -294,6 +301,8 @@ const filter = (array, typeString) => {
 return typeArray;
 
 };
+
+// Paints pet cards to DOM based on btn selection with event listeners
 
 cardsOnDom(pets);
 
@@ -324,6 +333,7 @@ showDogsButton.addEventListener("click", () => {
 
 const form = document.querySelector('form');
 
+// Creates new pet on array and resets form
 
 const createPet = (e) => {
  e.preventDefault(); 
@@ -344,6 +354,8 @@ const createPet = (e) => {
 
 form.addEventListener('submit', createPet);
 
+// Adding delete function to easily delete pets
+
 const app = document.querySelector("#app");
 app.addEventListener('click', (e) => {
  
@@ -359,30 +371,12 @@ app.addEventListener('click', (e) => {
  }
 });
 
+// Repaints DOM without deleted pets
+
 const startApp = () => {
  cardsOnDom(pets);
  
 };
 
-
-const App = document.querySelector("#app");
-
-
-app.addEventListener('click', (e) => {
- 
-  if (e.target.id.includes("delete")) {
-  
-    const [, id] = e.target.id.split("--");
-    const index = pets.findIndex(e => e.id === Number(id));
-    pets.splice(index, 1);
-
-    cardsOnDom(pets);
-  }
-});
-
-const startapp = () => {
-  cardsOnDom(pets);
-
-}
 
 startApp();
